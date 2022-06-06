@@ -1,10 +1,11 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {auth, googleAuthProvider} from "../../firebase"
 import {toast} from "react-toastify"
 import {Button} from "antd"
 import {MailOutlined, LoadingOutlined, GoogleOutlined} from "@ant-design/icons"
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import {useNavigate} from "react-router-dom"
+import {Link} from "react-router-dom"
 
 
 const Login = ({history}) => {
@@ -13,6 +14,12 @@ const Login = ({history}) => {
   const [password,setPassword] = useState("")
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
+  const {user} = useSelector((state) => ({...state}))
+  
+
+  useEffect(()=>{
+      if ( user && user.token ) navigate("/")
+  },[user])
 
   let dispatch = useDispatch()
   
@@ -75,6 +82,7 @@ const Login = ({history}) => {
     <br />
     <Button onClick={handleSubmit} type="primary" className='mb-3' block shape='round' icon={<MailOutlined />} disabled={!email || password.length < 6} size="large">Login with Email/Password</Button>
     <Button onClick={googleLogin} type="danger" className='mb-3' block shape='round' icon={<GoogleOutlined />} size="large">Login with Google</Button>
+    <Link to="/forgot/password" className='float-end text-danger'>Forgot Password</Link>
   </form>
 
 

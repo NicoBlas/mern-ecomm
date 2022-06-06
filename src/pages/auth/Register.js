@@ -1,10 +1,19 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {auth} from "../../firebase"
 import {toast} from "react-toastify"
+import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const Register = () => {
 
   const [email,setEmail] = useState("")
+  const navigate = useNavigate()
+  const {user} = useSelector((state) => ({...state}))
+  
+
+  useEffect(()=>{
+      if ( user && user.token ) navigate("/")
+  },[user])
   
 
   const handleSubmit = async (e) =>{
