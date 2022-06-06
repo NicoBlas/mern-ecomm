@@ -1,7 +1,11 @@
 import React, {useState} from 'react'
 import {Menu} from "antd"
-import { AppstoreOutlined, SettingOutlined, UserOutlined, UserAddOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, SettingOutlined, UserOutlined, UserAddOutlined, LogoutOutlined } from '@ant-design/icons';
 import {Link} from "react-router-dom"
+import firebase from "firebase"
+import {useDispatch} from "react-redux"
+import {useNavigate} from "react-router-dom"
+
 
 const {SubMenu, Item} = Menu
 
@@ -11,8 +15,21 @@ const Header = () => {
 
     const [current, setCurrent] = useState("")
 
+    let dispatch = useDispatch()
+    let navigate = useNavigate()
+
     const handleClick = (e) =>{
         setCurrent(e.key)
+    }
+
+    const logout = () =>{
+        firebase.auth().signOut()
+        dispatch({
+            type: "LOGOUT",
+            payload: null
+        })
+
+        navigate("/login")
     }
 
     return (
@@ -37,6 +54,7 @@ const Header = () => {
                 <Item key="three" icon={<AppstoreOutlined />}>
                     Navigation Three
                 </Item>
+                <Item icon={<LogoutOutlined />} onClick={logout}>Logout</Item>
             </SubMenu>
         </Menu>
     )
