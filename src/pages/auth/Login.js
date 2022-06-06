@@ -1,10 +1,11 @@
 import React, {useState} from 'react'
-import {auth} from "../../firebase"
+import {auth, googleAuthProvider} from "../../firebase"
 import {toast} from "react-toastify"
 import {Button} from "antd"
-import {MailOutlined} from "@ant-design/icons"
+import {MailOutlined, LoadingOutlined, GoogleOutlined} from "@ant-design/icons"
 import {useDispatch} from "react-redux"
 import {useNavigate} from "react-router-dom"
+
 
 const Login = ({history}) => {
 
@@ -40,9 +41,30 @@ const Login = ({history}) => {
     }
   }
 
+  const googleLogin = async () =>{
+    auth.signInWithPopup(googleAuthProvider)
+    .then( async (result) =>{
+      const user = result
+      const idTokenResult = await user.getIdTokenResult()
+
+      dispatch({
+        type: "LOGGED_IN_USER",
+        payload: {
+          email: user.email,
+          token: idTokenResult.token
+        }
+      
+      })
+      navigate("/")
+    })
+    .catch(err => {
+      console.log(err)
+      toast.error(err)
+    })
+  }
 
   const loginForm = () => <form onSubmit={handleSubmit} >
-    <div className='form-group'>
+    <div className='form-group mb-4'>
       <input type="email" className='form-control' value={email} onChange={e => setEmail(e.target.value)} placeholder="Your email" autoFocus/>
     </div>
     
@@ -52,6 +74,7 @@ const Login = ({history}) => {
     
     <br />
     <Button onClick={handleSubmit} type="primary" className='mb-3' block shape='round' icon={<MailOutlined />} disabled={!email || password.length < 6} size="large">Login with Email/Password</Button>
+    <Button onClick={googleLogin} type="danger" className='mb-3' block shape='round' icon={<GoogleOutlined />} size="large">Login with Google</Button>
   </form>
 
 
@@ -59,9 +82,14 @@ const Login = ({history}) => {
     <div className='container p-5'>
       <div className='row'>
         <div className='col-md-6 offset-md-3' />
-          <h4>Login</h4>
-          
+          {!loading?(
+            <h4>Login</h4>
+          ) : (
+            <LoadingOutlined  style={{ fontSize: '56px', color: '#08c' }} />
+          )
+          }
           {loginForm()}
+          
 
       </div>
 
