@@ -15,6 +15,7 @@ import UserRoute from "./components/routes/UserRoute"
 import Password from "./pages/user/Password"
 import WishList from "./pages/user/WishList"
 import AdminDashboard from "./pages/admin/AdminDashboard"
+import CategoryCreate from "./pages/admin/category/CategoryCreate"
 
 import {auth} from "./firebase"
 import {useDispatch} from "react-redux"
@@ -71,6 +72,7 @@ function App() {
         <Route path="/user/password" element={ <UserRoute><Password /></UserRoute> } />
         <Route path="/user/wishlist" element={ <UserRoute><WishList /></UserRoute> } />
         <Route path="/admin/dashboard" element={ <AdminRoute><AdminDashboard /></AdminRoute> } />
+        <Route path="/admin/category" element={ <AdminRoute><CategoryCreate /></AdminRoute> } />
         
       </Routes>
     </>

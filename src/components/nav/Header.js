@@ -54,12 +54,18 @@ const Header = () => {
             
             {user && (
                 <SubMenu className="float-end" key="SubMenu" title={user.email && user.email.split("@")[0]} icon={<SettingOutlined />}>
-                    <Item key="two" icon={<AppstoreOutlined />}>
-                        Navigation Two
-                    </Item>
-                    <Item key="three" icon={<AppstoreOutlined />}>
-                        Navigation Three
-                    </Item>
+                    {user && user.role === "subscriber" && (
+                        <Item>
+                            <Link to="/user/history">Dashboard</Link>
+                        </Item>
+                    )}
+
+                    {user && user.role === "admin" && (
+                        <Item>
+                            <Link to="/admin/dashboard">Dashboard</Link>
+                        </Item>
+                    )}
+                    
                     <Item icon={<LogoutOutlined />} onClick={logout}>Logout</Item>
              </SubMenu>
             )}
