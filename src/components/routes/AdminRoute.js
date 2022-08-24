@@ -18,7 +18,7 @@ const AdminRoute = ({children}) => {
                 setOk(true)
             })
             .catch( (err) => {
-                console.log("Admi route error", err)
+                console.log("Admin route error", err)
                 setOk(false)
             })
         }
