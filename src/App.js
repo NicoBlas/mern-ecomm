@@ -17,6 +17,9 @@ import WishList from "./pages/user/WishList"
 import AdminDashboard from "./pages/admin/AdminDashboard"
 import CategoryCreate from "./pages/admin/category/CategoryCreate"
 import CategoryUpdate from "./pages/admin/category/CategoryUpdate"
+import SubCreate from "./pages/admin/sub/SubCreate"
+import SubUpdate from "./pages/admin/sub/SubUpdate"
+
 
 import {auth} from "./firebase"
 import {useDispatch} from "react-redux"
@@ -75,6 +78,10 @@ function App() {
         <Route path="/admin/dashboard" element={ <AdminRoute><AdminDashboard /></AdminRoute> } />
         <Route path="/admin/category" element={ <AdminRoute><CategoryCreate /></AdminRoute> } />
         <Route path="/admin/category/:slug" element={ <AdminRoute><CategoryUpdate /></AdminRoute> } />
+        <Route path="/admin/sub" element={ <AdminRoute><SubCreate /></AdminRoute> } />
+        <Route path="/admin/sub/:slug" element={ <AdminRoute><SubUpdate /></AdminRoute> } />
+
+
       </Routes>
     </>
   );
